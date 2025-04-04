@@ -9,8 +9,8 @@ spec:
       - CreateNamespace=true
   project: default
   sources:
-    - chart: longhorn
-      repoURL: https://charts.longhorn.io/
+    - repoURL: https://charts.longhorn.io/
+      chart: longhorn
       targetRevision: v1.8.0 # Replace with the Longhorn version you'd like to install or upgrade to
       helm:
         values: |
