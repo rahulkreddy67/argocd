@@ -18,4 +18,4 @@ spec:
             jobEnabled: false
   destination:
     server: https://kubernetes.default.svc
-    namespace: longhorn
+    namespace: longhorn-system
