@@ -61,7 +61,7 @@ jobs:
               EOF
 
               # Commit and push the generated application.yaml to the repo
-              git add ./$dir/output/application.yaml
+              git add "$dir/output/application.yaml"
               git commit -m "Update application.yaml for $(basename $dir)"
               git push origin HEAD
               cd ..  # Go back to the parent directory
