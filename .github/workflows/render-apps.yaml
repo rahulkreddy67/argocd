@@ -41,7 +41,7 @@ jobs:
 
       - name: Commit rendered manifests
         run: |
-          git add "$dir/output/application.yaml"
+          git add "$dir/manifests/application.yaml"
           git commit -m "Update application.yaml for $(basename $dir)"
           git push origin HEAD
         continue-on-error: true
