@@ -18,15 +18,14 @@ jobs:
       # Set up Helm and Helmfile
       - name: Install Helm and Helmfile
         run: |
-          #curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-          #curl -Lo helmfile https://github.com/helmfile/helmfile/releases/download/v0.170.0/helmfile_linux_amd64
-          #chmod +x helmfile
-          #sudo mv helmfile /usr/local/bin/
           curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-          curl -Lo helmfile https://github.com/helmfile/helmfile/releases/latest/download/helmfile_linux_amd64
-          chmod +x helmfile
-          sudo mv helmfile /usr/local/bin/
+          wget wget https://github.com/helmfile/helmfile/releases/download/v0.170.1/helmfile_0.170.1_linux_amd64.tar.gz
+          sudo tar -zxvf helmfile_0.170.1_linux_amd64.tar.gz
+          rm helmfile_0.170.1_linux_amd64.tar.gz
+          mv helmfile /usr/bin/
           helmfile --version  # Add this to check if helmfile is installed correctly
+          helmfile init
+          
       # Install yq for parsing values.yaml
       - name: Install yq
         run: |
