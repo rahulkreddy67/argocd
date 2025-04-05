@@ -27,47 +27,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y yq
-      # Render helmfile and generate application.yaml
-      - name: Render Helmfile and generate application.yaml
+      # Render Helmfile for all apps
+      - name: Render all apps
         run: |
-          # Iterate through each app folder
-          for dir in apps/*/; do
-            if [[ -d "$dir" && -f "$dir/helmfile.yaml" ]]; then
-              # Enter the app directory
-              cd "$dir"
-
-              # Render Helmfile and generate Kubernetes manifests in the corresponding app folder
-              helmfile template --output-dir ./$dir/output
-
-              # Extract repoURL and targetRevision from values.yaml (or hardcode if necessary)
-              repoURL=$(yq eval '.repoURL' ./values.yaml)
-              targetRevision=$(yq eval '.targetRevision' ./values.yaml)
-
-              # Generate the application.yaml based on rendered manifests
-              cat <<EOF > ./$dir/output/application.yaml
-              apiVersion: argoproj.io/v1alpha1
-              kind: Application
-              metadata:
-                name: $(basename $dir)
-                namespace: argocd
-              spec:
-                project: default
-                source:
-                  repoURL: "$repoURL"
-                  chart: $(basename $dir)
-                  targetRevision: "$targetRevision"
-                  helm:
-                    values: |
-                      $(cat ./values.yaml)
-                destination:
-                  server: https://kubernetes.default.svc
-                  namespace: $(basename $dir)-namespace
-              EOF
-
-              # Commit and push the generated application.yaml to the repo
-              git add "$dir/output/application.yaml"
-              git commit -m "Update application.yaml for $(basename $dir)"
-              git push origin HEAD
-              cd ..  # Go back to the parent directory
-            fi
+          for dir in */; do
+            echo "Rendering Helmfile in $dir"
+            mkdir -p "$dir/manifests"
+            helmfile -f "$dir/helmfile.yaml" template > "$dir/manifests/application.yaml"
           done
+
+      - name: Commit rendered manifests
+        run: |
+          git add "$dir/output/application.yaml"
+          git commit -m "Update application.yaml for $(basename $dir)"
+          git push origin HEAD
+        continue-on-error: true
