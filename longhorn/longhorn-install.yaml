@@ -19,6 +19,7 @@ spec:
           service:
             ui:
               type: LoadBalancer
+              nodePort: null
   destination:
     server: https://kubernetes.default.svc
     namespace: longhorn-system
