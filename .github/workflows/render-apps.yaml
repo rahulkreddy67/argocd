@@ -16,10 +16,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       # Set up Helm and Helmfile
-      - name: Set up Helm and Helmfile
-        uses: oke-py/helmfile-action@v1
-        with:
-          helmfile-version: v0.170.0 # Specify the Helmfile version you'd like
+      - name: Install Helm and Helmfile
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          curl -Lo helmfile https://github.com/helmfile/helmfile/releases/download/v0.170.0/helmfile_linux_amd64
+          chmod +x helmfile
+          sudo mv helmfile /usr/local/bin/
       # Install yq for parsing values.yaml
       - name: Install yq
         run: |
