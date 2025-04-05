@@ -1,5 +1,4 @@
 name: Helmfile Render
-
 on:
   push:
     branches:
@@ -7,28 +6,23 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
   helmfile-render:
     runs-on: ubuntu-latest
-
     steps:
       # Checkout the repo
       - name: Checkout repository
         uses: actions/checkout@v2
-
       # Set up Helm and Helmfile
       - name: Set up Helm and Helmfile
         uses: oke-py/helmfile-action@v1
         with:
           helmfile-version: v0.170.0 # Specify the Helmfile version you'd like
-
       # Install yq for parsing values.yaml
       - name: Install yq
         run: |
           sudo apt-get update
           sudo apt-get install -y yq
-
       # Render helmfile and generate application.yaml
       - name: Render Helmfile and generate application.yaml
         run: |
@@ -47,24 +41,24 @@ jobs:
 
               # Generate the application.yaml based on rendered manifests
               cat <<EOF > ./$dir/output/application.yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: $(basename $dir)
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: "$repoURL"
-    chart: $(basename $dir)
-    targetRevision: "$targetRevision"
-    helm:
-      values: |
-        $(cat ./values.yaml)
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: $(basename $dir)-namespace
-EOF
+              apiVersion: argoproj.io/v1alpha1
+              kind: Application
+              metadata:
+                name: $(basename $dir)
+                namespace: argocd
+              spec:
+                project: default
+                source:
+                  repoURL: "$repoURL"
+                  chart: $(basename $dir)
+                  targetRevision: "$targetRevision"
+                  helm:
+                    values: |
+                      $(cat ./values.yaml)
+                destination:
+                  server: https://kubernetes.default.svc
+                  namespace: $(basename $dir)-namespace
+              EOF
 
               # Commit and push the generated application.yaml to the repo
               git add ./$dir/output/application.yaml
