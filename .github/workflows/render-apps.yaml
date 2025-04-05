@@ -19,7 +19,9 @@ jobs:
       - name: Install Helm and Helmfile
         run: |
           curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-          wget wget https://github.com/helmfile/helmfile/releases/download/v0.170.1/helmfile_0.170.1_linux_amd64.tar.gz
+          #wget wget https://github.com/helmfile/helmfile/releases/download/v0.170.1/helmfile_0.170.1_linux_amd64.tar.gz
+          curl -Lo helmfile.tar.gz https://github.com/helmfile/helmfile/releases/download/v0.170.1/helmfile_0.170.1_linux_amd64.tar.gz
+          tar -zxvf helmfile.tar.gz  # Extract the tarball
           chmod +x helmfile
           sudo mv helmfile /usr/local/bin/
           
