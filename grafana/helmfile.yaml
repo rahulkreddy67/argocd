@@ -1,1 +1,20 @@
-# empty file
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+spec:
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+  project: default
+  sources:
+    - chart: grafana
+      repoURL: https://grafana.github.io/helm-charts
+      targetRevision: v8.11.3 # Replace with the Longhorn version you'd like to install or upgrade to
+      helm:
+        valuesFiles:
+          - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: grafana-system
