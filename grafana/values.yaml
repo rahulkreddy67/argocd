@@ -1,0 +1,2 @@
+repoURL: 'https://grafana.github.io/helm-charts'
+targetRevision: 'v8.11.3'
