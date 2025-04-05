@@ -3,25 +3,19 @@ kind: Application
 metadata:
   name: longhorn
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
-  project: default
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: longhorn-system
-  source:
-    chart: longhorn
-    repoURL: https://charts.longhorn.io/
-    targetRevision: v1.8.0
-    helm:
-      values: |
-        preUpgradeChecker:
-          jobEnabled: false
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
-
+  project: default
+  sources:
+    - chart: longhorn
+      repoURL: https://charts.longhorn.io/
+      targetRevision: v1.8.1 # Replace with the Longhorn version you'd like to install or upgrade to
+      helm:
+        values: |
+          preUpgradeChecker:
+            jobEnabled: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: longhorn-system
