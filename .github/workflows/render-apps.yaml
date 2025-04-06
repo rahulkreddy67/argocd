@@ -38,6 +38,14 @@ jobs:
               cd ..
             fi
           done
+      - name: Verify rendered files
+        run: |
+          for dir in */; do
+            if [[ -f "$dir/helmfile.yaml" ]]; then
+              echo "Checking if application.yaml exists in $dir"
+              ls -R "$dir"
+            fi
+          done
 
       - name: Commit rendered manifests
         run: |
