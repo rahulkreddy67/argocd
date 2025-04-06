@@ -29,5 +29,5 @@ spec:
         - values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: {{ .namespace }}
+    namespace: {{ .Values.namespace }}
 EOF
