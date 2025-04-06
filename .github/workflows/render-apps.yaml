@@ -59,7 +59,7 @@ jobs:
           for dir in */; do
             if [[ -f "$dir/helmfile.yaml" ]]; then
               git add .
-              git commit -m "Update application.yaml for $(basename $dir)"
+              git commit -m "Update application.yaml for $(basename $dir)" || echo "No changes to commit in $dir"
               git remote set-url origin https://rahulkreddy67:${{ secrets.GH_TOKEN_ARGOCD }}@github.com/rahulkreddy67/argocd.git
               git push origin HEAD:master
             fi
