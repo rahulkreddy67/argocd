@@ -1,4 +1,4 @@
-repoURL: 'https://grafana.github.io/helm-charts'
-targetRevision: 'v8.11.3'
+repoURL: https://grafana.github.io/helm-charts
+targetRevision: v8.11.3
 chart: grafana
 namespace: grafana-system
