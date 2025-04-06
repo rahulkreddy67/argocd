@@ -17,7 +17,7 @@ spec:
     targetRevision: 'v8.11.3'
     helm:
       valuesFiles:
-        - values.yaml
+        - grafana/values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: grafana-system
