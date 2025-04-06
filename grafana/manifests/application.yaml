@@ -12,4 +12,27 @@ repoURL: "https://grafana.github.io/helm-charts"
 targetRevision: v8.11.3
 chart: grafana
 namespace: grafana-system
+---
+# Source: grafana/templates/manifests/application.yaml
+# Source: grafana/templates/manifests/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+spec:
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    repoURL: 'https://grafana.github.io/helm-charts'
+    chart: 'grafana'
+    targetRevision: 'v8.11.3'
+    helm:
+      valuesFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: grafana-system
 
