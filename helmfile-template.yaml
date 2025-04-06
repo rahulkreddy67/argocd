@@ -34,7 +34,7 @@ releases:
                 targetRevision: '{{ .Values.targetRevision }}'
                 helm:
                   valuesFiles:
-                    - values.yaml
+                    - {{ .Values.chart }}/values.yaml
               destination:
                 server: https://kubernetes.default.svc
                 namespace: {{ .Values.namespace }}
