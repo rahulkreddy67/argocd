@@ -34,7 +34,7 @@ jobs:
               echo "Rendering Helmfile in $dir"
               mkdir -p $dir/manifests
               cd "$dir"
-              helmfile -f helmfile.yaml build --debug > manifests/application.yaml
+              helmfile -f helmfile.yaml apply --skip-deps > manifests/application.yaml
               cd ..
             fi
           done
