@@ -36,6 +36,8 @@ jobs:
               mkdir -p $dir/manifests
               cd "$dir"
               helmfile -f helmfile.yaml template > manifests/application.yaml
+              tail -n +15 manifests/application.yaml > manifests/tmp.yaml && mv manifests/tmp.yaml manifests/application.yaml
+
               cd ..
             fi
           done
