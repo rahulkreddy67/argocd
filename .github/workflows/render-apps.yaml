@@ -62,5 +62,5 @@ jobs:
             fi
           done
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ARGOCD }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_FOR_ARGOCD }}
         continue-on-error: true
