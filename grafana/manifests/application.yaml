@@ -1,0 +1,15 @@
+---
+# Source: grafana/templates/helmfile.yaml
+# Source: grafana/templates/helmfile.yaml
+helmfiles:
+  - path: ../helmfile-template.yaml
+    values:
+      - values.yaml
+---
+# Source: grafana/templates/values.yaml
+# Source: grafana/templates/values.yaml
+repoURL: "https://grafana.github.io/helm-charts"
+targetRevision: v8.11.3
+chart: grafana
+namespace: grafana-system
+
