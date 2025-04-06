@@ -1,0 +1,33 @@
+releases:
+  - name: {{ .chart }}
+    namespace: argocd
+    chart: none  # Not used here
+    disableValidation: true
+    hooks:
+      - events: ["prepare"]
+        command: bash
+        args:
+          - -c
+          - |
+            cat <<EOF > manifests/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .chart }}
+  namespace: argocd
+spec:
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    repoURL: '{{ .repoURL }}'
+    chart: '{{ .chart }}'
+    targetRevision: '{{ .targetRevision }}'
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ .namespace }}
+EOF
