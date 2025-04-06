@@ -1,38 +1,72 @@
 ---
-# Source: grafana/templates/helmfile.yaml
-# Source: grafana/templates/helmfile.yaml
-helmfiles:
-  - path: ../helmfile-template.yaml
-    values:
-      - values.yaml
----
-# Source: grafana/templates/values.yaml
-# Source: grafana/templates/values.yaml
-repoURL: "https://grafana.github.io/helm-charts"
-targetRevision: v8.11.3
-chart: grafana
-namespace: grafana-system
----
-# Source: grafana/templates/manifests/application.yaml
-# Source: grafana/templates/manifests/application.yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
+#  Source: /home/runner/work/argocd/argocd/helmfile-template.yaml
+
+filepath: helmfile-template.yaml
+helmBinary: helm
+kustomizeBinary: kustomize
+releases:
+- chart: grafana
+  chartPath: /tmp/chartify3213349497/argocd/grafana
+  disableValidation: true
+  hooks:
+  - name: ""
+    events:
+    - prepare
+    command: mkdir
+    args:
+    - -p
+    - grafana/manifests
+    showlogs: false
+  - name: ""
+    events:
+    - prepare
+    command: bash
+    args:
+    - -c
+    - |
+      # Ensure the manifests folder exists before writing
+      mkdir -p manifests
+      cat <<EOF > grafana/manifests/application.yaml
+      ---
+      apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        name: grafana
+        namespace: argocd
+      spec:
+        project: default
+        syncPolicy:
+          syncOptions:
+            - CreateNamespace=true
+        source:
+          repoURL: 'https://grafana.github.io/helm-charts'
+          chart: 'grafana'
+          targetRevision: 'v8.11.3'
+          helm:
+            valuesFiles:
+              - values.yaml
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: grafana-system
+      EOF
+    showlogs: false
   name: grafana
   namespace: argocd
-spec:
-  project: default
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-  source:
-    repoURL: 'https://grafana.github.io/helm-charts'
-    chart: 'grafana'
-    targetRevision: 'v8.11.3'
-    helm:
-      valuesFiles:
-        - values.yaml
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: grafana-system
+templates: {}
+renderedvalues:
+  chart: grafana
+  namespace: grafana-system
+  repoURL: https://grafana.github.io/helm-charts
+  targetRevision: v8.11.3
+---
+#  Source: /home/runner/work/argocd/argocd/grafana/helmfile.yaml
 
+filepath: helmfile.yaml
+helmBinary: helm
+kustomizeBinary: kustomize
+helmfiles:
+- path: ../helmfile-template.yaml
+  values:
+  - values.yaml
+templates: {}
+renderedvalues: {}
