@@ -53,6 +53,8 @@ jobs:
           git config --global user.email "rahulkreddy67@gmail.com"
 
       - name: Commit rendered manifests
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN_ARGOCD }}
         run: |
           for dir in */; do
             if [[ -f "$dir/helmfile.yaml" ]]; then
