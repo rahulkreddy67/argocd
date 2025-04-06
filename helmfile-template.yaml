@@ -6,12 +6,6 @@ releases:
     disableValidation: true
     hooks:
       - events: ["prepare"]
-        command: mkdir
-        args:
-          - -p
-          - "{{ .Values.chart }}/manifests"
-
-      - events: ["prepare"]
         command: bash
         args:
           - -c
