@@ -49,7 +49,11 @@ jobs:
 
       - name: Commit rendered manifests
         run: |
-          git add "$dir/manifests/application.yaml"
-          git commit -m "Update application.yaml for $(basename $dir)"
-          git push origin HEAD
+          for dir in */; do
+            if [[ -f "$dir/helmfile.yaml" ]]; then
+              git add "$dir/manifests/application.yaml"
+              git commit -m "Update application.yaml for $(basename $dir)"
+              git push origin HEAD
+            fi
+          done
         continue-on-error: true
