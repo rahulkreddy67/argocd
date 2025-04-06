@@ -46,6 +46,11 @@ jobs:
               ls -R "$dir"
             fi
           done
+          
+      - name: Set up Git identity
+        run: |
+          git config --global user.name "Rahul Kancharakuntla"
+          git config --global user.email "rahulkreddy67@gmail.com"
 
       - name: Commit rendered manifests
         run: |
