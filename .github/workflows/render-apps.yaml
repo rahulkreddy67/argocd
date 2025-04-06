@@ -25,6 +25,8 @@ jobs:
           tar -zxvf helmfile.tar.gz  # Extract the tarball
           chmod +x helmfile
           sudo mv helmfile /usr/local/bin/
+          helm plugin install https://github.com/databus23/helm-diff
+
         
       # Render Helmfile for all apps
       - name: Render all apps
@@ -34,7 +36,7 @@ jobs:
               echo "Rendering Helmfile in $dir"
               mkdir -p $dir/manifests
               cd "$dir"
-              helmfile -f helmfile.yaml apply --skip-deps > manifests/application.yaml
+              helmfile -f helmfile.yaml --log-level=warn > manifests/application.yaml
               cd ..
             fi
           done
