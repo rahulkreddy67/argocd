@@ -34,7 +34,7 @@ jobs:
               echo "Rendering Helmfile in $dir"
               cd "$dir"
               mkdir -p $dir/manifests
-              helmfile -f helmfile.yaml template > manifests/application.yaml
+              helmfile -f helmfile.yaml template --debug > manifests/application.yaml
               cd ..
             fi
           done
