@@ -6,6 +6,12 @@ releases:
     disableValidation: true
     hooks:
       - events: ["prepare"]
+        command: mkdir
+        args:
+          - -p
+          - manifests/
+          
+      - events: ["prepare"]
         command: bash
         args:
           - -c
