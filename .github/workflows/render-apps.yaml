@@ -53,14 +53,14 @@ jobs:
           git config --global user.email "rahulkreddy67@gmail.com"
 
       - name: Commit rendered manifests
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN_FOR_ARGOCD }}
         run: |
           for dir in */; do
             if [[ -f "$dir/helmfile.yaml" ]]; then
               git add "$dir/manifests/application.yaml"
               git commit -m "Update application.yaml for $(basename $dir)"
-              git push https://github.com/rahulkreddy67/argocd.git HEAD:master
+              git push https://github.com/rahulkreddy67:${GH_TOKEN}/argocd.git HEAD:master
             fi
           done
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_FOR_ARGOCD }}
         continue-on-error: true
