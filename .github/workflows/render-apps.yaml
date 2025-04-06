@@ -15,6 +15,7 @@ jobs:
       # Checkout the repo
       - name: Checkout repository
         uses: actions/checkout@v2
+        
       # Set up Helm and Helmfile
       - name: Install Helm and Helmfile
         run: |
@@ -24,19 +25,17 @@ jobs:
           tar -zxvf helmfile.tar.gz  # Extract the tarball
           chmod +x helmfile
           sudo mv helmfile /usr/local/bin/
-          
-      # Install yq for parsing values.yaml
-      - name: Install yq
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y yq
+        
       # Render Helmfile for all apps
       - name: Render all apps
         run: |
           for dir in */; do
-            echo "Rendering Helmfile in $dir"
-            mkdir -p "$dir/manifests"
-            helmfile -f "$dir/helmfile.yaml" template > "$dir/manifests/application.yaml"
+            if [[ -f "$dir/helmfile.yaml" ]]; then
+              echo "Rendering Helmfile in $dir"
+              mkdir -p "$dir/manifests"
+              helmfile -f "$dir/helmfile.yaml" template > "$dir/manifests/application.yaml"
+              cd ..
+            fi
           done
 
       - name: Commit rendered manifests
