@@ -32,9 +32,9 @@ releases:
                 repoURL: '{{ .Values.repoURL }}'
                 chart: '{{ .Values.chart }}'
                 targetRevision: '{{ .Values.targetRevision }}'
-                helm:
-                  valuesFiles:
-                    - {{ .Values.chart }}/values.yaml
+                #helm:
+                #  valuesFiles:
+                #    - {{ .Values.chart }}/values.yaml
               destination:
                 server: https://kubernetes.default.svc
                 namespace: {{ .Values.namespace }}
