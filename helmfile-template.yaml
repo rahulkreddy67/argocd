@@ -2,7 +2,7 @@
 releases:
   - name: {{ .Values.chart }}
     namespace: argocd
-    chart: none  # Not used here
+    chart: ""  # Not used here
     disableValidation: true
     hooks:
       - events: ["prepare"]
