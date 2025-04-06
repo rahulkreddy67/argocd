@@ -53,8 +53,6 @@ jobs:
           git config --global user.email "rahulkreddy67@gmail.com"
 
       - name: Commit rendered manifests
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ARGOCD }}
         run: |
           for dir in */; do
             if [[ -f "$dir/helmfile.yaml" ]]; then
@@ -63,4 +61,6 @@ jobs:
               git push https://github.com/rahulkreddy67/argocd.git HEAD:master
             fi
           done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ARGOCD }}
         continue-on-error: true
