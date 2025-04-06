@@ -1,3 +1,4 @@
+---
 releases:
   - name: {{ .Values.chart }}
     namespace: argocd
@@ -10,24 +11,24 @@ releases:
           - -c
           - |
             cat <<EOF > manifests/application.yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: {{ .Values.chart }}
-  namespace: argocd
-spec:
-  project: default
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-  source:
-    repoURL: '{{ .Values.repoURL }}'
-    chart: '{{ .Values.chart }}'
-    targetRevision: '{{ .Values.targetRevision }}'
-    helm:
-      valuesFiles:
-        - values.yaml
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: {{ .Values.namespace }}
-EOF
+            apiVersion: argoproj.io/v1alpha1
+            kind: Application
+            metadata:
+              name: {{ .Values.chart }}
+              namespace: argocd
+            spec:
+              project: default
+              syncPolicy:
+                syncOptions:
+                  - CreateNamespace=true
+              source:
+                repoURL: '{{ .Values.repoURL }}'
+                chart: '{{ .Values.chart }}'
+                targetRevision: '{{ .Values.targetRevision }}'
+                helm:
+                  valuesFiles:
+                    - values.yaml
+              destination:
+                server: https://kubernetes.default.svc
+                namespace: {{ .Values.namespace }}
+            EOF
