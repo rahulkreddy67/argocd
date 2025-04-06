@@ -1,5 +1,5 @@
 releases:
-  - name: {{ .chart }}
+  - name: {{ .Values.chart }}
     namespace: argocd
     chart: none  # Not used here
     disableValidation: true
@@ -13,7 +13,7 @@ releases:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ .chart }}
+  name: {{ .Values.chart }}
   namespace: argocd
 spec:
   project: default
@@ -21,9 +21,9 @@ spec:
     syncOptions:
       - CreateNamespace=true
   source:
-    repoURL: '{{ .repoURL }}'
-    chart: '{{ .chart }}'
-    targetRevision: '{{ .targetRevision }}'
+    repoURL: '{{ .Values.repoURL }}'
+    chart: '{{ .Values.chart }}'
+    targetRevision: '{{ .Values.targetRevision }}'
     helm:
       valueFiles:
         - values.yaml
