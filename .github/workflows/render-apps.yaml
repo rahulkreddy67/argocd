@@ -25,7 +25,7 @@ jobs:
           tar -zxvf helmfile.tar.gz  # Extract the tarball
           chmod +x helmfile
           sudo mv helmfile /usr/local/bin/
-          helm plugin install https://github.com/databus23/helm-diff
+          #helm plugin install https://github.com/databus23/helm-diff
 
         
       # Render Helmfile for all apps
