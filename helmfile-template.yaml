@@ -17,6 +17,7 @@ releases:
             # Ensure the manifests folder exists before writing
             mkdir -p manifests
             cat <<EOF > manifests/application.yaml
+            ---
             apiVersion: argoproj.io/v1alpha1
              kind: Application
              metadata:
