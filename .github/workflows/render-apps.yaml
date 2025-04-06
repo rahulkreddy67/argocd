@@ -33,7 +33,6 @@ jobs:
             if [[ -f "$dir/helmfile.yaml" ]]; then
               echo "Rendering Helmfile in $dir"
               cd "$dir"
-              mkdir manifests
               helmfile -f helmfile.yaml template > manifests/application.yaml
               cd ..
             fi
