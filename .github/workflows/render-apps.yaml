@@ -60,8 +60,8 @@ jobs:
             if [[ -f "$dir/helmfile.yaml" ]]; then
               git add "$dir/manifests/application.yaml"
               git commit -m "Update application.yaml for $(basename $dir)"
-              git remote set-url --push origin https://rahulkreddy67:${GH_TOKEN}/argodcd.git
-              git push
+              git remote set-url origin https://rahulkreddy67:${GH_TOKEN}@github.com/argodcd.git
+              git push origin HEAD:master
             fi
           done
         continue-on-error: true
