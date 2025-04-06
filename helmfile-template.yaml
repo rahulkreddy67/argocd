@@ -9,8 +9,8 @@ releases:
         command: mkdir
         args:
           - -p
-          - manifests/
-          
+          - "{{ .Values.chart }}/manifests"
+
       - events: ["prepare"]
         command: bash
         args:

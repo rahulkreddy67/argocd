@@ -33,7 +33,7 @@ jobs:
             if [[ -f "$dir/helmfile.yaml" ]]; then
               echo "Rendering Helmfile in $dir"
               cd "$dir"
-              helmfile -f helmfile.yaml template
+              helmfile -f helmfile.yaml template > /manifests/
               cd ..
             fi
           done
