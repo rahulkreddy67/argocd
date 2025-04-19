@@ -1,0 +1,3 @@
+# Example values to customize
+grafana:
+  enabled: false # We already have Grafana installed separately

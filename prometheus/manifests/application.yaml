@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: prometheus-system
+  annotations:
+    argocd-image-updater.argoproj.io/auto-sync: "true"
+    argocd-image-updater.argoproj.io/auto-sync-interval: "5m"
+    argocd-image-updater.argoproj.io/auto-sync-interval-seconds: "300"
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/rahulkreddy67/argocd.git'
+    targetRevision: HEAD
+    path: prometheus/manifests
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

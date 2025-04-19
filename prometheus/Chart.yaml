@@ -1,0 +1,9 @@
+apiVersion: v2
+name: prometheus
+description: Deploy kube-prometheus-stack via GitOps
+type: application
+version: 0.1.0
+dependencies:
+  - name: kube-prometheus-stack
+    version: 70.7.0 # Match latest compatible version
+    repository: https://prometheus-community.github.io/helm-charts
